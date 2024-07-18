@@ -18,19 +18,17 @@ def config(configuration) -> dict:
 
   return saia_level
 
-
 def test_proxy(config):
   '''
   Sample GeneXus Enterprise AI Proxy testing
   https://wiki.genexus.com/enterprise-ai/wiki?19,GeneXus+Enterprise+AI+Proxy
   '''
-
   base_url = config.get('base_url')
   api_token = config.get('api_token')
-
+  
   # generate an image with dall-e
   url = f"{base_url}/proxy/openai/v1/images/generations"
-
+ 
   payload = {
     "model": "dall-e-2",
     "prompt": "a halloween pumpkin",
@@ -52,8 +50,8 @@ def test_proxy(config):
   image_url = response.get('data')[0].get('url')
 
   assert image_url, "Invalid URL"
-
-
+  
+  print(image_url)
 
   # completions
   url = f"{base_url}/proxy/openai/v1/chat/completions"

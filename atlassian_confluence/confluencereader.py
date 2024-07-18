@@ -9,11 +9,17 @@ from llama_index.readers.base import BaseReader
 from llama_index.readers.schema.base import Document
 from retrying import retry
 
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from saia_ingest.sanitization import preprocess_text
 
 CONFLUENCE_API_TOKEN = "CONFLUENCE_API_TOKEN"
 CONFLUENCE_PASSWORD = "CONFLUENCE_PASSWORD"
 CONFLUENCE_USERNAME = "CONFLUENCE_USERNAME"
+
+base_url = "https://apvf2021.atlassian.net/wiki/"
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +55,7 @@ class ConfluenceReader(BaseReader):
     """
 
     def __init__(
-        self, base_url: str = None,
+        self, base_url: str = base_url,
         oauth2: Optional[Dict] = None,
         cloud: bool = True,
         timestamp: Optional[datetime] = None
@@ -324,7 +330,7 @@ class ConfluenceReader(BaseReader):
 
         type = page["type"]
         complete_content = f"{title}\n{text}\ntype: {type}\nspace: {space_key}"
-        processed_content = preprocess_text(complete_content, remove_all_new_lines=False)
+        processed_content = preprocess_text(complete_content, remove_punctuation=True, remove_all_new_lines=False)
         id = page["id"]
         url = self.base_url + page["_links"]["tinyui"]
 

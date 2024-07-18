@@ -34,6 +34,19 @@ python -m venv venv
 .\venv\Scripts\Activate
 ```
 
+1.1 Instala pip-tools:
+```bash
+pip install pip-tools
+
+# Genera el archivo requirements.txt desde pyproject.toml:
+
+pip-compile pyproject.toml
+
+# Instala las dependencias desde requirements.txt:
+
+pip install -r requirements.txt
+```
+
 2. Install the package dependencies:
 
 ```bash

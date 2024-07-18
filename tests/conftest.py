@@ -10,4 +10,8 @@ def configuration():
             "profile": os.environ.get('ASSISTANT_NAME')
         }
     }
+    print("Configuration:")
+    print(f"BASE_URL: {conf['saia']['base_url']}")
+    print(f"API_TOKEN: {conf['saia']['api_token']}")
+    print(f"ASSISTANT_NAME: {conf['saia']['profile']}")
     return conf
