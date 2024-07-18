@@ -34,7 +34,7 @@ python -m venv venv
 .\venv\Scripts\Activate
 ```
 
-1.1 Instala pip-tools:
+2. Instala pip-tools:
 ```bash
 pip install pip-tools
 
@@ -47,7 +47,7 @@ pip-compile pyproject.toml
 pip install -r requirements.txt
 ```
 
-2. Install the package dependencies:
+3. Install the package dependencies:
 
 ```bash
 # install poetry first
@@ -56,7 +56,7 @@ pip install poetry
 poetry install
 ```
 
-3. Set the `PYTHONPATH` environment variable to the path of the current directory:
+4. Set the `PYTHONPATH` environment variable to the path of the current directory:
 
 ```bash
 export PYTHONPATH="$PYTHONPATH:$(pwd)"
