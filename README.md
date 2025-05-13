@@ -1,10 +1,10 @@
 [![pytest](https://github.com/genexuslabs/saia-ingest/actions/workflows/pytest.yml/badge.svg)](https://github.com/genexuslabs/saia-ingest/actions/workflows/pytest.yml)
 
-Welcome to the [GeneXus Enterprise AI](./EnterpriseAISuite.md) Ingest utilities package, codename `saia-ingest`.
+Welcome to the [Globant Enterprise AI](./EnterpriseAISuite.md) Ingest utilities package, codename `saia-ingest`.
 
 It's purpose is to provide sample code to connect to different data sources and help external developers to interact with the platform to upload documents. Check the [configuration](#configuration) section to know the available data-sources.
 
-Check the [API](API.md) section if you want to get sample code to explore the [GeneXus Enterprise AI](./EnterpriseAISuite.md) API.
+Check the [API](API.md) section if you want to get sample code to explore the [Enterprise AI](./EnterpriseAISuite.md) API.
 
 You can use this repository as reference to extend it for other [data sources](#data-sources); please let us know if you create [new connectors](./CONTRIBUTION.md) and contribute back!
 
@@ -88,12 +88,15 @@ saia-cli ingest -c ./config/s3_sandbox.yaml
 saia-cli ingest -c ./config/s3_sandbox.yaml -t 2023-12-21
 # using a type
 saia-cli ingest -c ./config/s3_sandbox.yaml --type test
+# using a type and the last 7 days
+saia-cli ingest -c ./config/s3_sandbox.yaml --type test --days 7
 ```
 
 ### Data Sources
 
 The configuration file details all parameters needed to run the ingestion, use the `--type` to decide the target ingestion; supported data sources are:
 
+ * `fs` (file system) [config](./fs/filesystem_config.md)
  * `s3` [config](./amazon_s3/s3_config.md)
  * `jira` [config](./atlassian_jira/jira_config.md)
  * `confluence` [config](./atlassian_confluence/confluence_config.md)

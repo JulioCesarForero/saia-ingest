@@ -4,8 +4,10 @@ Maintain custom header naming convention using kebab-case format.
 
 
 class DefaultHeaders:
+    AGENT = 'geai'
     AUTHORIZATION = 'Authorization'
     JSON_CONTENT_TYPE = 'application/json'
+    JSON_CONTENT_TYPE_UTF8 = 'application/json; charset=utf-8'
     SOURCE = 'X-Saia-Source'
     REQUEST_ID = 'X-Saia-Req-Id'
     PARENT_REQUEST_ID = 'X-Saia-Parent-Req-Id'
@@ -54,5 +56,7 @@ class DefaultLLM:
 
 
 class Defaults:
-    PACKAGE_DESCRIPTION = "GeneXus Enterprise AI"
+    PACKAGE_DESCRIPTION = "Globant Enterprise AI"
     PACKAGE_URL = "https://github.com/genexuslabs/saia-ingest/blob/main/README.md"
+    PACKAGE_METADATA_POSTFIX = ".saia.metadata"
+    FILE_HASH = "hash"

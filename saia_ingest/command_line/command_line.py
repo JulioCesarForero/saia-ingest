@@ -4,12 +4,14 @@ import time
 from typing import Any, Optional
 from datetime import datetime, timezone, timedelta
 import logging
+import sys
 from logging.handlers import RotatingFileHandler
 
-from ..ingestor import ingest_s3, ingest_jira, ingest_confluence, ingest_github, ingest_gdrive, ingest_sharepoint
+from ..ingestor import ingest_s3, ingest_jira, ingest_confluence, ingest_github, ingest_gdrive, ingest_sharepoint, ingest_file_system
 from ..log import AccumulatingLogHandler
 
 logging.basicConfig(level=logging.INFO)
+sys.stdout.reconfigure(encoding='utf-8')
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 log_file_name = f"debug/run_{timestamp}.txt"
 log_dir = os.path.dirname(log_file_name)
@@ -38,7 +40,7 @@ def handle_ingest(
     start_time = time.time()
     config_file = config
 
-    if days is not None and days > 0:
+    if days is not None:
         timestamp = datetime.now(timezone.utc) - timedelta(days=days)
     elif timestamp is not None:
         timestamp = datetime.fromisoformat(timestamp).replace(tzinfo=timezone.utc)
@@ -48,26 +50,28 @@ def handle_ingest(
     elif type == "sharepoint":
         ret = ingest_sharepoint(config_file, start_time)
     elif type == "jira":
-        ret = ingest_jira(config_file)
+        ret = ingest_jira(config_file, timestamp=timestamp)
     elif type == "confluence":
-        ret = ingest_confluence(config_file)
+        ret = ingest_confluence(config_file, timestamp=timestamp)
     elif type == "github":
         ret = ingest_github(config_file)
     elif type == "gdrive":
-        ret = ingest_gdrive(config_file)
+        ret = ingest_gdrive(config_file, timestamp=timestamp)
+    elif type == "fs":
+        ret = ingest_file_system(config_file, timestamp=timestamp)
     else:
         logging.getLogger().error(f"Unknown {type} type")
         return False
 
     if ret:
         formatted_timestamp = timestamp.strftime("%Y-%m-%d %H:%M") if timestamp is not None else "no timestamp"
-        logging.getLogger().info(f"Successfully {type} ingestion '{formatted_timestamp}' config: {config_file}")
+        logging.getLogger().info(f"{type} ingestion '{formatted_timestamp}' config: {config_file}")
     
     file_handler.close()
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="GeneXus Enterprise AI CLI")
+    parser = argparse.ArgumentParser(description="Globant Enterprise AI CLI")
 
     # Subparsers for the main commands
     subparsers = parser.add_subparsers(title="commands", dest="command", required=True)

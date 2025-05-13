@@ -5,7 +5,8 @@ Create a `yaml` file under the `config` folder with the following parameters, le
 ```yaml
 s3: # contact the provider for the following information
   bucket: !!str 'string'
-  key: !!str 'string'
+  key: !!str 'string' # Item name from S3
+  keys_from_file: !!str 'string' # Absolute file_path containing a list of S3 items 
   region: !!str 'string'
   aws_access_key: !!str 'string'
   aws_secret_key: !!str 'string'
@@ -19,14 +20,17 @@ s3: # contact the provider for the following information
   process_files: !!bool True|False (default) # Renaming files based on the document type.
   required_exts: # list of required extensions, for example: txt, pdf, docx, pptx, xlsx
   reprocess_failed_files: !!bool True|False (default) # Check if failed uploads needs to be reprocessed
-  reprocess_failed_files_file: !!str 'string' # Full path to a file
+  reprocess_failed_files_reference: !!str 'string' # Full path to a file or URL to Saia GetDocuments API
   reprocess_valid_status_list: # List of Statuses to process, valid values Unknown, Starting, Failed, Pending, Success
   delete_local_folder: !!bool True|False (default) # Delete temporary folder if created
+  detect_file_duplication: !!bool True|False (default) # generate and compare a file hash on upload, discard duplications
   excluded_exts: # list of excluded extensions, by default it is suggested to include the following: raw, metadata
     - !!str 'metadata'
     - !!str 'raw'
+  verbose: !!bool True|False (default) # Add more detail to logger? (use it for troubleshooting)
+  delete_downloaded_files: !!bool True|False (default) # Delete downloaded files
 saia:
-  base_url: !!str 'string' # GeneXus Enterprise AI Base URL
+  base_url: !!str 'string' # Globant Enterprise AI Base URL
   api_token: !!str 'string'
   profile: !!str 'string' # Must match the RAG assistant ID
   max_parallel_executions: !!int 5
